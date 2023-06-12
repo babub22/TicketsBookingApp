@@ -1,12 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, useRoutes } from "react-router-dom";
+import { Header } from "./components/Header";
+import { Layout } from "./components/Layout";
+import { useFetchTicketsData } from "./hooks/useFetchTicketsData";
+import { About } from "./pages/About";
+import { Home } from "./pages/Home";
+import { Reservation } from "./pages/Reservation";
 
-function App() {
-  return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  );
+export const TicketsContext = React.createContext();
+
+function AppRoutes() {
+  const routes = useRoutes([
+    { path: "/", element: <Home /> },
+    { path: "/about", element: <About /> },
+    { path: "/:number", element: <Reservation /> },
+  ]);
+
+  return routes;
 }
 
-export default App;
+export function App() {
+  const { tickets } = useFetchTicketsData();
+
+  function getTicketById(id) {
+    return tickets.find((ticket) => ticket.id === id);
+  }
+
+  return (
+    <TicketsContext.Provider value={{ tickets, getTicketById }}>
+      <Router>
+        <Header />
+        <Layout>
+          <AppRoutes />
+        </Layout>
+      </Router>
+    </TicketsContext.Provider>
+  );
+}
