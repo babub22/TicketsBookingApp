@@ -1,6 +1,6 @@
 ## About project
 
-This project for booking airline tickets is a test task for ProCorp. <br>
+This application is a demonstration of my frontend development skills using React. <br>
 The project was made by <b>Vladislav Lesovoy</b>
 
 ### Technology: 
